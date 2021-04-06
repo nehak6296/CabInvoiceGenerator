@@ -60,8 +60,7 @@ namespace CabInvoiceGenerator
             {
                 foreach (Ride ride in rides)
                 {
-                    totalFare += this.CalculateFare(ride.distance, ride.time);
-
+                    totalFare += this.CalculateFare(ride.distance, ride.time);                    
                 }
             }
             catch (CabInvoiceException)
