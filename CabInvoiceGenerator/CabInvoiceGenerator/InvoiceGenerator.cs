@@ -22,7 +22,7 @@ namespace CabInvoiceGenerator
                     MINIMUM_COST_PER_KM = 10;
                     COST_PER_TIME = 1;
                     MINIMUM_FAIR = 5;
-                }
+                } 
             }
             catch(CabInvoiceException)
             {
@@ -51,7 +51,29 @@ namespace CabInvoiceGenerator
                     throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_TIME, "Invalid Time");
                 }
             }
-            return totalFare;
+            return Math.Max(totalFare, MINIMUM_FAIR);
         }
+        public InvoiceSummary CalculateFare(Ride[] rides)
+        {
+            double totalFare = 0;
+            try
+            {
+                foreach (Ride ride in rides)
+                {
+                    totalFare += this.CalculateFare(ride.distance, ride.time);
+
+                }
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "rides are null");
+                }
+
+            }
+            return new InvoiceSummary(rides.Length, totalFare);
+        }
+
     }
 }

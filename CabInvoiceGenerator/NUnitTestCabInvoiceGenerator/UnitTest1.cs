@@ -21,5 +21,14 @@ namespace NUnitTestCabInvoiceGenerator
             double expected = 25;
             Assert.AreEqual(expected, fare);
         }
+        [Test]
+        public void GivenMultipleRides_WhenCalculated_ThenReturnAverage()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 5) };
+            InvoiceSummary summary = invoiceGenerator.CalculateFare(rides);
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 35.0);
+            Assert.AreEqual(expectedSummary.GetType(), summary.GetType());
+        }
     }
 }
